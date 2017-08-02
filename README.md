@@ -1,9 +1,3 @@
-# address-book
-
-git add . && git commit -m "Refactoring" && git push && git push heroku && heroku open
-
-npm install && npm start
-
 [firebase-url]: https://firebase.com
 [rfc-http-url]: https://www.ietf.org/rfc/rfc2616.txt
 [jwt-url]: http://jwt.io
@@ -82,4 +76,15 @@ We at STRV love ES 2015! Do you use new language features, too?
 Is your API documented? Is the documentation sufficient for at least basic needs in multi-platform development team?
 
 > That's it. Good luck and we look forward to seeing your submission!
+
+
+## Run
+
+npm install && npm start
+
+## Deploy
+
+TODO
+
+
 
