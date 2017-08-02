@@ -80,7 +80,7 @@ Is your API documented? Is the documentation sufficient for at least basic needs
 
 ## Run
 
-npm install && npm start
+> npm install && npm start
 
 ## Deploy
 
