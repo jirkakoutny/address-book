@@ -1,10 +1,10 @@
 const expect = require('expect');
 const request = require('supertest');
-const {ObjectID} = require('mongodb');
+const { ObjectID } = require('mongodb');
 
-const {app} = require('./../server');
-const {User} = require('./../models/user');
-const {users, populateUsers} = require('./seed/seed');
+const { app } = require('./../server');
+const { User } = require('./../models/user');
+const { users, populateUsers } = require('./seed/seed');
 
 beforeEach(populateUsers);
 
@@ -39,7 +39,7 @@ describe('POST /users', () => {
 
     request(app)
       .post('/users')
-      .send({email, password})
+      .send({ email, password })
       .expect(200)
       .expect((res) => {
         expect(res.headers['x-auth']).toExist();
@@ -51,7 +51,7 @@ describe('POST /users', () => {
           return done(err);
         }
 
-        User.findOne({email}).then((user) => {
+        User.findOne({ email }).then((user) => {
           expect(user).toExist();
           expect(user.password).toNotBe(password);
           done();

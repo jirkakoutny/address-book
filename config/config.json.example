@@ -1,0 +1,14 @@
+{
+    "development": {
+        "PORT": 3000,
+        "MONGODB_URI": "mongodb://localhost:27017/AddressBook",
+        "JWT_SECRET": "secret", //  A string, buffer, or object containing either the secret for HMAC algorithms
+        "JWT_VALIDITY": "1h" // Token Expiration (exp claim)
+    },
+    "test": {
+        "PORT": 3000,
+        "MONGODB_URI": "mongodb://localhost:27017/AddressBookTest",
+        "JWT_SECRET": "secret", //  A string, buffer, or object containing either the secret for HMAC algorithms
+        "JWT_VALIDITY": "1h" // Token Expiration (exp claim)
+    }
+}
