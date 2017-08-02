@@ -11,7 +11,7 @@ var { User } = require('./models/user');
 var {authenticate} = require('./middleware/authenticate');
 
 const publicPath = path.join(__dirname, '/public');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 var app = express();
 
@@ -27,6 +27,7 @@ app.post('/users', (req, res) => {
     }).then((token) => {
         res.header('x-auth', token).send(user);
     }).catch((e) => {
+        console.log(e);
         res.status(400).send(e);
     })
 });
