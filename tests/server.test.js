@@ -151,3 +151,44 @@ describe('DELETE /users/me/token', () => {
       });
   });
 });
+
+describe('POST /contacts', () => {
+  it('should create a contact if authenticated', (done) => {
+    var email = 'example@example.com';
+
+    request(app)
+      .post('/contacts')
+      .send({ email })
+      .set('x-auth', users[0].tokens[0].token)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.externalId).toExist();
+        expect(res.body.email).toBe(email);
+      })
+      .end(done);
+  });
+
+  it('should not create a contact if not authenticated', (done) => {
+    var email = 'example@example.com';
+
+    request(app)
+      .post('/contacts')
+      .send({ email })
+      .expect(401)
+      .expect((res) => {
+        expect(res.body).toEqual({});
+      })
+      .end(done);
+  });
+
+  it('should return validation errors if request invalid', (done) => {
+    request(app)
+      .post('/contacts')
+      .set('x-auth', users[0].tokens[0].token)
+      .send({
+        email: 'and',
+      })
+      .expect(400)
+      .end(done);
+  });
+});

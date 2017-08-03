@@ -75,45 +75,22 @@ app.delete('/users/me/token', authenticate, async (req, res) => {
 });
 
 app.post('/contacts', authenticate, (req, res) => {
-    const body = _.pick(req.body, ['email']);
-    const contact = new Contact(body);
+    try {
+        const body = _.pick(req.body, ['email']);
+        const contact = new Contact(body);
 
-    // contact.save().then((x) => {
-    //     console.log('In then of expreess');
-    //     res.status(200).send(x);
-    // }, (e) => {
-    //     console.log(e);
-    //     res.status(400).send(e);
-    // });
+        console.log(contact);
 
+        contact.saveRemote((contact, error) => {
 
-    contact.save((x) => {
-        if (x) {
-            res.status(200).send(x);
-        }
-        else {
-            res.status(400).send();
-        }
-    });
+            if (error)
+                throw error;
 
-    // TODO ERROR
-
-
-    // try {
-    //     const body = _.pick(req.body, ['email']);
-    //     const contact = new Contact(body);
-
-    //     console.log('Before save');
-    //     var newContact = await contact.save();
-    //     console.log(newContact);
-    //     res.send();
-    // } catch (e) {
-    //     console.log('Error');
-    //     console.log(e);
-    //     res.status(400).send(e);
-    // }
-
-    // res.status(200).send();
+            res.send(contact);
+        });
+    } catch (e) {
+        res.status(400).send(e);
+    }
 });
 
 app.listen(port, () => { console.log(`Server is up on ${port}`) });
