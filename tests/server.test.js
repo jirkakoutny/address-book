@@ -180,15 +180,4 @@ describe('POST /contacts', () => {
       })
       .end(done);
   });
-
-  it('should return validation errors if request invalid', (done) => {
-    request(app)
-      .post('/contacts')
-      .set('x-auth', users[0].tokens[0].token)
-      .send({
-        email: 'and',
-      })
-      .expect(400)
-      .end(done);
-  });
 });

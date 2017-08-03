@@ -74,20 +74,10 @@ app.delete('/users/me/token', authenticate, async (req, res) => {
     }
 });
 
-app.post('/contacts', authenticate, (req, res) => {
+app.post('/contacts', authenticate, async (req, res) => {
     try {
-        const body = _.pick(req.body, ['email']);
-        const contact = new Contact(body);
-
-        console.log(contact);
-
-        contact.saveRemote((contact, error) => {
-
-            if (error)
-                throw error;
-
-            res.send(contact);
-        });
+        var contact = await new Contact(req.body).save();
+        res.send(contact);
     } catch (e) {
         res.status(400).send(e);
     }

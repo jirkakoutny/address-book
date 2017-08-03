@@ -1,56 +1,53 @@
-const mongoose = require('mongoose');
 var { firedb } = require('../firebase/firebase');
-const validator = require('validator');
 const _ = require('lodash');
 
-var ContactSchema = new mongoose.Schema(
-    {
-        externalId: {
-            type: String,
-            trim: true,
-        },
-        name: {
-            first: String,
-            last: String
-        },
-        email: {
-            type: String,
-            required: true,
-            trim: true,
-            minlength: 3,
-            validate: {
-                validator: (value) => validator.isEmail(value),
-                message: '{VALUE} is not a valid email'
-            }
-        }
+var ContactSchema = {
+    dob: {},
+    cell: {},
+    email: {},
+    gender: {},
+    location: {
+        street: {},
+        city: {},
+        postcode: {},
+        state: {},
+    },
+    name: {
+        first: {},
+        last: {},
+        title: {}
+    },
+    nat: {},
+    phone: {},
+    picture: {
+        large: {},
+        medium: {},
+        thumbnail: {}
     }
-);
+}
 
-ContactSchema.methods.toJSON = function () {
-    var Contact = this;
-    var ContactObject = Contact.toObject();
+var Contact = function (data) {
+    this.data = this.sanitize(data);
+}
 
-    return _.omit(ContactObject, ['_id']);
-};
+Contact.prototype.data = {};
 
-ContactSchema.methods.saveRemote = function (callback) {
-    var contact = this;
+Contact.prototype.save = function () {
+    var contact = this.data;
 
-    console.log('Validator');
-    var err = contact.validateSync();
-    if (err) {
-        callback(null, err);
-        return;
-    }
-
-    firedb.ref('CONTACTS').push(contact.toJSON()).then(newItem => {
-        contact.externalId = newItem.key;
-        callback(contact);
-    }, error => {
-        callback(null, new Error('Unable to save to firebase'));
+    return new Promise((resolve, reject) => {
+        firedb.ref('CONTACTS').push(contact).then(newItem => {
+            contact.externalId = newItem.key;
+            resolve(contact);
+        }, error => {
+            reject('Unable to save to firebase');
+        });
     });
 };
 
-var Contact = mongoose.model('Contact', ContactSchema);
+Contact.prototype.sanitize = function (data) {
+    data = data || {};
+    return _.pick(_.defaults(data, ContactSchema), _.keys(ContactSchema));
+}
 
-module.exports = { Contact }
+module.exports = { Contact };
