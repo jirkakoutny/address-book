@@ -9,23 +9,23 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 
-var { mongoose } = require('./db/mongoose');
-var { User } = require('./models/user');
-var { Contact } = require('./models/contact');
-var { authenticate } = require('./middleware/authenticate');
+const { mongoose } = require('./db/mongoose');
+const { User } = require('./models/user');
+const { Contact } = require('./models/contact');
+const { authenticate } = require('./middleware/authenticate');
 
 const publicPath = path.join(__dirname, '/public');
 const logDirectory = path.join(__dirname, '/log')
 const port = process.env.PORT;
 
-var app = express();
+const app = express();
 
 app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
 
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
-var accessLogStream = rfs('access.log', {
+const accessLogStream = rfs('access.log', {
     size: '10M',
     interval: '1d', // rotate daily 
     path: logDirectory,
@@ -76,7 +76,7 @@ app.delete('/users/me/token', authenticate, async (req, res) => {
 
 app.post('/contacts', authenticate, async (req, res) => {
     try {
-        var contact = await new Contact(req.body).save();
+        const contact = await new Contact(req.body).save();
         res.send(contact);
     } catch (e) {
         res.status(400).send(e);

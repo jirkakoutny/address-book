@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
-var UserSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema(
     {
         email: {
             type: String,
@@ -36,16 +36,16 @@ var UserSchema = new mongoose.Schema(
 );
 
 UserSchema.methods.toJSON = function () {
-    var user = this;
-    var userObject = user.toObject();
+    const user = this;
+    const userObject = user.toObject();
 
     return _.pick(userObject, ['_id', 'email']);
 };
 
 UserSchema.methods.generateAuthToken = function () {
-    var user = this;
-    var access = 'auth';
-    var token = jwt.sign(
+    const user = this;
+    const access = 'auth';
+    const token = jwt.sign(
         {
             _id: user._id.toHexString(),
             access
@@ -61,7 +61,7 @@ UserSchema.methods.generateAuthToken = function () {
 };
 
 UserSchema.methods.removeToken = function (token) {
-    var user = this;
+    const user = this;
 
     return user.update({
         $pull: {
@@ -71,7 +71,7 @@ UserSchema.methods.removeToken = function (token) {
 };
 
 UserSchema.statics.findByToken = function (token) {
-    var User = this;
+    const User = this;
 
     return User.findOne({
         'tokens.token': token,
@@ -80,7 +80,7 @@ UserSchema.statics.findByToken = function (token) {
 };
 
 UserSchema.pre('save', function (next) {
-    var user = this;
+    const user = this;
 
     if (user.isModified('password')) {
         bcrypt.genSalt(10, (err, salt) => {
@@ -95,7 +95,7 @@ UserSchema.pre('save', function (next) {
 });
 
 UserSchema.methods.removeToken = function (token) {
-    var user = this;
+    const user = this;
 
     return user.update({
         $pull: {
@@ -105,7 +105,7 @@ UserSchema.methods.removeToken = function (token) {
 };
 
 UserSchema.statics.findByCredentials = function (email, password) {
-    var User = this;
+    const User = this;
 
     return User.findOne({ email }).then((user) => {
         if (!user) {
@@ -125,6 +125,6 @@ UserSchema.statics.findByCredentials = function (email, password) {
     });
 };
 
-var User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = { User }

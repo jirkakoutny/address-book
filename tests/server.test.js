@@ -34,8 +34,8 @@ describe('GET /users/me', () => {
 
 describe('POST /users', () => {
   it('should create a user', (done) => {
-    var email = 'example@example.com';
-    var password = '123mnb!';
+    const email = 'example@example.com';
+    const password = '123mnb!';
 
     request(app)
       .post('/users')
@@ -154,7 +154,7 @@ describe('DELETE /users/me/token', () => {
 
 describe('POST /contacts', () => {
   it('should create a contact if authenticated', (done) => {
-    var email = 'example@example.com';
+    const email = 'example@example.com';
 
     request(app)
       .post('/contacts')
@@ -169,7 +169,7 @@ describe('POST /contacts', () => {
   });
 
   it('should not create a contact if not authenticated', (done) => {
-    var email = 'example@example.com';
+    const email = 'example@example.com';
 
     request(app)
       .post('/contacts')

@@ -1,7 +1,7 @@
-var { firedb } = require('../firebase/firebase');
+const { firedb } = require('../firebase/firebase');
 const _ = require('lodash');
 
-var ContactSchema = {
+const ContactSchema = {
     dob: {},
     cell: {},
     email: {},
@@ -26,14 +26,14 @@ var ContactSchema = {
     }
 }
 
-var Contact = function (data) {
+const Contact = function (data) {
     this.data = this.sanitize(data);
 }
 
 Contact.prototype.data = {};
 
 Contact.prototype.save = function () {
-    var contact = this.data;
+    let contact = this.data;
 
     return new Promise((resolve, reject) => {
         firedb.ref('CONTACTS').push(contact).then(newItem => {
