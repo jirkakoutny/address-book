@@ -6,13 +6,15 @@ const { app } = require('./../server');
 const { User } = require('./../models/user');
 const { users, populateUsers } = require('./seed/seed');
 
+const { Constants } = require('../constants');
+
 beforeEach(populateUsers);
 
 describe('GET /users/me', () => {
   it('should return user if authenticated', (done) => {
     request(app)
       .get('/users/me')
-      .set('x-auth', users[0].tokens[0].token)
+      .set(Constants.authHeader, users[0].tokens[0].token)
       .expect(200)
       .expect((res) => {
         expect(res.body._id).toBe(users[0]._id.toHexString());
@@ -42,7 +44,7 @@ describe('POST /users', () => {
       .send({ email, password })
       .expect(200)
       .expect((res) => {
-        expect(res.headers['x-auth']).toExist();
+        expect(res.headers[Constants.authHeader]).toExist();
         expect(res.body._id).toExist();
         expect(res.body.email).toBe(email);
       })
@@ -92,7 +94,7 @@ describe('POST /users/login', () => {
       })
       .expect(200)
       .expect((res) => {
-        expect(res.headers['x-auth']).toExist();
+        expect(res.headers[Constants.authHeader]).toExist();
       })
       .end((err, res) => {
         if (err) {
@@ -101,8 +103,8 @@ describe('POST /users/login', () => {
 
         User.findById(users[1]._id).then((user) => {
           expect(user.tokens[1]).toInclude({
-            access: 'auth',
-            token: res.headers['x-auth']
+            access: Constants.authHeader,
+            token: res.headers[Constants.authHeader]
           });
           done();
         }).catch((e) => done(e));
@@ -118,7 +120,7 @@ describe('POST /users/login', () => {
       })
       .expect(400)
       .expect((res) => {
-        expect(res.headers['x-auth']).toNotExist();
+        expect(res.headers[Constants.authHeader]).toNotExist();
       })
       .end((err, res) => {
         if (err) {
@@ -137,7 +139,7 @@ describe('DELETE /users/me/token', () => {
   it('should remove auth token on logout', (done) => {
     request(app)
       .delete('/users/me/token')
-      .set('x-auth', users[0].tokens[0].token)
+      .set(Constants.authHeader, users[0].tokens[0].token)
       .expect(200)
       .end((err, res) => {
         if (err) {
@@ -159,7 +161,7 @@ describe('POST /contacts', () => {
     request(app)
       .post('/contacts')
       .send({ email })
-      .set('x-auth', users[0].tokens[0].token)
+      .set(Constants.authHeader, users[0].tokens[0].token)
       .expect(200)
       .expect((res) => {
         expect(res.body.externalId).toExist();

@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 
+const { Constants } = require('../constants');
+
 let authenticate = (req, res, next) => {
-    const token = req.header('x-auth');
+    const token = req.header(Constants.authHeader);
     let decoded;
 
     try {

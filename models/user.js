@@ -3,6 +3,7 @@ const validator = require('validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const bcrypt = require('bcryptjs');
+const { Constants } = require('../constants');
 
 const UserSchema = new mongoose.Schema(
     {
@@ -44,7 +45,7 @@ UserSchema.methods.toJSON = function () {
 
 UserSchema.methods.generateAuthToken = function () {
     const user = this;
-    const access = 'auth';
+    const access = Constants.authHeader;
     const token = jwt.sign(
         {
             _id: user._id.toHexString(),
@@ -75,7 +76,7 @@ UserSchema.statics.findByToken = function (token) {
 
     return User.findOne({
         'tokens.token': token,
-        'tokens.access': 'auth'
+        'tokens.access': Constants.authHeader
     });
 };
 

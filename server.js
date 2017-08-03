@@ -10,6 +10,9 @@ const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
 
 const { mongoose } = require('./db/mongoose');
+
+const { Constants } = require('./constants');
+
 const { User } = require('./models/user');
 const { Contact } = require('./models/contact');
 const { authenticate } = require('./middleware/authenticate');
@@ -38,7 +41,7 @@ app.post('/users', async (req, res) => {
         const user = new User(body);
         await user.save();
         const token = await user.generateAuthToken();
-        res.header('x-auth', token).send(user);
+        res.header(Constants.authHeader, token).send(user);
     } catch (e) {
         res.status(400).send(e);
     }
@@ -58,7 +61,7 @@ app.post('/users/login', async (req, res) => {
         const body = _.pick(req.body, ['email', 'password']);
         const user = await User.findByCredentials(body.email, body.password);
         const token = await user.generateAuthToken();
-        res.header('x-auth', token).send(user);
+        res.header(Constants.authHeader, token).send(user);
     } catch (e) {
         res.status(400).send();
     }
