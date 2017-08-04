@@ -1,7 +1,31 @@
 const _ = require('lodash');
 
 const { firedb } = require('../firebase/firebase');
-const { ContactSchema } = require('./schemas/contactSchema');
+
+const ContactSchema = {
+    dob: {},
+    cell: {},
+    email: {},
+    gender: {},
+    location: {
+        street: {},
+        city: {},
+        postcode: {},
+        state: {},
+    },
+    name: {
+        first: {},
+        last: {},
+        title: {}
+    },
+    nat: {},
+    phone: {},
+    picture: {
+        large: {},
+        medium: {},
+        thumbnail: {}
+    }
+}
 
 const Contact = function (data, creator) {
     this.data = this.sanitize(data);
