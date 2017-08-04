@@ -7,7 +7,7 @@ const logDirectory = path.join(__dirname, '../log');
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
 const accessLogStream = rfs('access.log', {
     size: '10M',
-    interval: '1d', // rotate daily 
+    interval: '1h', // rotate daily 
     path: logDirectory,
 })
 

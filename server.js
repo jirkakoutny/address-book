@@ -18,14 +18,10 @@ const { authenticate } = require('./middleware/authenticate');
 
 const { logger } = require('./logger/logger');
 
-const publicPath = path.join(__dirname, '/public');
-const port = process.env.PORT;
-
 const app = express();
 
-app.use(express.static(publicPath));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
-
 app.use(logger);
 
 app.post('/users', async (req, res) => {
@@ -79,6 +75,6 @@ app.post('/contacts', authenticate, async (req, res) => {
     }
 });
 
-app.listen(port, () => { console.log(`Server is up on ${port}`) });
+app.listen(process.env.PORT, () => { console.log(`Server is up on ${process.env.PORT}`) });
 
 module.exports = { app };
