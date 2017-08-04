@@ -1,0 +1,14 @@
+// Obtain your firebase.json confige by followint these instructions https://firebase.google.com/docs/admin/setup
+
+{
+  "type": "service_account",
+  "project_id": "PROJECT_NAME",
+  "private_key_id": "PRIVATE_KEY_ID",
+  "private_key": "PRIVATE_KEY",
+  "client_email": "EMAIL",
+  "client_id": "CLIENT_ID",
+  "auth_uri": "AUTH_URI",
+  "token_uri": "TOKEN_URI",
+  "auth_provider_x509_cert_url": "AUTH_PROVIDER",
+  "client_x509_cert_url": "CLIENT_CERT"
+}

@@ -1,6 +1,13 @@
-const firebase = require('firebase');
+const admin = require("firebase-admin");
+// import * as admin from "firebase-admin";
 
-firebase.initializeApp({ databaseURL: process.env.FIREBASE_DB_URL });
-const firedb = firebase.database();
+const serviceAccount = require("../config/firebase.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: process.env.FIREBASE_DB_URL
+});
+
+const firedb = admin.database();
 
 module.exports = { firedb };
