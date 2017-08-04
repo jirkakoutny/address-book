@@ -3,8 +3,7 @@ require('./config/config');
 const _ = require('lodash');
 const fs = require('fs')
 const express = require('express');
-const morgan = require('morgan')
-const rfs = require('rotating-file-stream')
+
 const path = require('path');
 const bodyParser = require('body-parser');
 const { ObjectID } = require('mongodb');
@@ -17,8 +16,9 @@ const { User } = require('./models/user');
 const { Contact } = require('./models/contact');
 const { authenticate } = require('./middleware/authenticate');
 
+const { logger } = require('./logger/logger');
+
 const publicPath = path.join(__dirname, '/public');
-const logDirectory = path.join(__dirname, '/log')
 const port = process.env.PORT;
 
 const app = express();
@@ -26,14 +26,7 @@ const app = express();
 app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
-
-fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
-const accessLogStream = rfs('access.log', {
-    size: '10M',
-    interval: '1d', // rotate daily 
-    path: logDirectory,
-})
-app.use(morgan('tiny', { stream: accessLogStream }))
+app.use(logger);
 
 app.post('/users', async (req, res) => {
     try {
