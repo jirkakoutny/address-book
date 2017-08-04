@@ -1,40 +1,10 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
-const bcrypt = require('bcryptjs');
-const { Constants } = require('../constants');
+const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema(
-    {
-        email: {
-            type: String,
-            unique: true,
-            required: true,
-            trim: true,
-            minlength: 3,
-            validate: {
-                validator: (value) => validator.isEmail(value),
-                message: '{VALUE} is not a valid email'
-            }
-        },
-        password: {
-            type: String,
-            require: true,
-            minlength: 6
-        },
-        tokens: [{
-            access: {
-                type: String,
-                require: true
-            },
-            token: {
-                type: String,
-                require: true
-            }
-        }]
-    }
-);
+const { Constants } = require('../constants');
+const { UserSchema } = require('./schemas/UserSchema');
 
 UserSchema.methods.toJSON = function () {
     const user = this;
@@ -109,20 +79,10 @@ UserSchema.statics.findByCredentials = function (email, password) {
     const User = this;
 
     return User.findOne({ email }).then((user) => {
-        if (!user) {
-            return Promise.reject();
-        }
-
-        return new Promise((resolve, reject) => {
-            // Use bcrypt.compare to compare password and user.password
-            bcrypt.compare(password, user.password, (err, res) => {
-                if (res) {
-                    resolve(user);
-                } else {
-                    reject();
-                }
-            });
-        });
+        return new Promise((resolve, reject) =>
+            bcrypt.compare(password, user.password, (err, res) =>
+                res ? resolve(user) : reject())
+        );
     });
 };
 

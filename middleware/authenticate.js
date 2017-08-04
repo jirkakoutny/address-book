@@ -7,13 +7,14 @@ let authenticate = (req, res, next) => {
     let decoded;
 
     try {
-        if (!token) {
+        if (!token)
             throw new Error();
-        }
 
-        let decoded = jwt.verify(token, process.env.JWT_SECRET);        
+        let decoded = jwt.verify(token, process.env.JWT_SECRET);
+
         req.userid = decoded._id;
         req.token = token;
+
         next();
     } catch (e) {
         res.status(401).send();

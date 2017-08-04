@@ -84,6 +84,9 @@ Is your API documented? Is the documentation sufficient for at least basic needs
 npm install && npm start
 ```
 
+Rename config.json.example to config.json and fill in specific settings.
+Rename firebase.json.example to firebase.json and fill in credentials.
+
 ## Deploy
 
 TODO

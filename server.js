@@ -1,27 +1,27 @@
+console.log("Starting up STRV Backend Test Project - Addressbook");
+
 require('./config/config');
 
-const _ = require('lodash');
+const bodyParser = require('body-parser');
 const fs = require('fs')
 const express = require('express');
-
-const path = require('path');
-const bodyParser = require('body-parser');
+const _ = require('lodash');
 const { ObjectID } = require('mongodb');
+const path = require('path');
 
-const { mongoose } = require('./db/mongoose');
-
-const { Constants } = require('./constants');
-
-const { User } = require('./models/user');
-const { Contact } = require('./models/contact');
 const { authenticate } = require('./middleware/authenticate');
+const { Constants } = require('./constants');
+const { mongoose } = require('./db/mongoose');
 
 const { logger } = require('./logger/logger');
 
+const { Contact } = require('./models/contact');
+const { User } = require('./models/user');
+
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '/public')));
 app.use(logger);
 
 app.post('/users', async (req, res) => {
@@ -75,6 +75,6 @@ app.post('/contacts', authenticate, async (req, res) => {
     }
 });
 
-app.listen(process.env.PORT, () => { console.log(`Server is up on ${process.env.PORT}`) });
+app.listen(process.env.PORT, () => console.log(`Server is up on ${process.env.PORT}`) );
 
 module.exports = { app };
