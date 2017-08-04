@@ -79,7 +79,7 @@ app.delete('/users/me/token', authenticate, async (req, res) => {
 
 app.post('/contacts', authenticate, async (req, res) => {
     try {
-        const contact = await new Contact(req.body).save();
+        const contact = await new Contact(req.body, req.userid).save();
         res.send(contact);
     } catch (e) {
         res.status(400).send(e);

@@ -11,7 +11,8 @@ let authenticate = (req, res, next) => {
             throw new Error();
         }
 
-        jwt.verify(token, process.env.JWT_SECRET);
+        let decoded = jwt.verify(token, process.env.JWT_SECRET);        
+        req.userid = decoded._id;
         req.token = token;
         next();
     } catch (e) {

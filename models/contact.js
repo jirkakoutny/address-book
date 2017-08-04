@@ -26,8 +26,9 @@ const ContactSchema = {
     }
 }
 
-const Contact = function (data) {
+const Contact = function (data, creator) {
     this.data = this.sanitize(data);
+    this.data.creator = creator;
 }
 
 Contact.prototype.data = {};
@@ -37,8 +38,8 @@ Contact.prototype.save = function () {
 
     return new Promise((resolve, reject) => {
         firedb.ref('CONTACTS').push(contact).then(newItem => {
-            contact.externalId = newItem.key;
-            resolve(contact);
+            contact.externalId = newItem.key;            
+            resolve(_.omit(contact, ['creator']));
         }, error => {
             reject('Unable to save to firebase');
         });

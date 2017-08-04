@@ -165,6 +165,7 @@ describe('POST /contacts', () => {
       .expect(200)
       .expect((res) => {
         expect(res.body.externalId).toExist();
+        expect(res.body.creator).toNotExist();
         expect(res.body.email).toBe(email);
       })
       .end(done);
