@@ -35,14 +35,14 @@ const Contact = function (data, creator) {
 }
 
 Contact.prototype.save = function () {
-    let contact = this.data;
+    let Contact = this.data;
 
     return new Promise((resolve, reject) => {
-        firedb.ref(ContactsCollectionId).push(contact).then(newItem => {
-            contact.externalId = newItem.key;
-            resolve(_.omit(contact, ['creator']));
+        firedb.ref(ContactsCollectionId).push(Contact).then(newItem => {
+            Contact.externalId = newItem.key;
+            resolve(_.omit(Contact, ['creator']));
         }, error => {
-            reject('Unable to save to firebase');
+            reject(error);
         });
     });
 };

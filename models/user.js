@@ -38,34 +38,35 @@ const UserSchema = new mongoose.Schema(
 );
 
 UserSchema.methods.toJSON = function () {
-    const user = this;
-    const userObject = user.toObject();
+    const User = this;
+    const userObject = User.toObject();
 
     return _.pick(userObject, ['_id', 'email']);
 };
 
 UserSchema.methods.generateAuthToken = function () {
-    const user = this;
+    const User = this;
+
     const access = Constants.authHeader;
     const token = jwt.sign(
         {
-            _id: user._id.toHexString(),
+            _id: User._id.toHexString(),
             access
         },
         process.env.JWT_SECRET,
         { expiresIn: process.env.JWT_VALIDITY }).toString();
 
-    user.tokens.push({ access, token });
+    User.tokens.push({ access, token });
 
-    return user.save().then(() => {
+    return User.save().then(() => {
         return token;
     });
 };
 
 UserSchema.methods.removeToken = function (token) {
-    const user = this;
+    const User = this;
 
-    return user.update({
+    return User.update({
         $pull: {
             tokens: { token }
         }
@@ -101,12 +102,12 @@ UserSchema.statics.findByCredentials = function (email, password) {
 };
 
 UserSchema.pre('save', function (next) {
-    const user = this;
+    const User = this;
 
-    if (user.isModified('password')) {
+    if (User.isModified('password')) {
         bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(user.password, salt, (err, hash) => {
-                user.password = hash;
+            bcrypt.hash(User.password, salt, (err, hash) => {
+                User.password = hash;
                 next();
             });
         });
@@ -117,21 +118,11 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.post('save', (error, res, next) => {
     if (error.name === 'MongoError' && error.code === 11000) {
-        next(_.omit(error.toJSON(), ['op']));
+        next(_.omit(error.toJSON(), ['op']));   // omit ID of duplicit record
     } else {
         next(error);
     }
 });
-
-UserSchema.methods.removeToken = function (token) {
-    const user = this;
-
-    return user.update({
-        $pull: {
-            tokens: { token }
-        }
-    });
-};
 
 const User = mongoose.model('User', UserSchema);
 

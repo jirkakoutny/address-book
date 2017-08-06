@@ -22,8 +22,6 @@ const { User } = require('./models/user');
 
 const app = express();
 
-app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc) 
-
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(limiter); 
