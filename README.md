@@ -5,6 +5,7 @@
 [nodejs-url]: https://nodejs.org/en/
 [heroku-url]: https://heroku.com
 [deployed-url]: https://afternoon-sands-34791.herokuapp.com
+[apiarydoc-url]: http://docs.addressbookjk.apiary.io/#
 
 # Backend Test Project - Addressbook
 
@@ -46,13 +47,9 @@ The same environment variables as before are expected to be set. With [Heroku][h
 
 ```git push heroku```
 
-## API 
+## Documentation
 
-  * ```POST /users``` Register new user
-  * ```POST /user/login``` Sign in a user
-  * ```GET /users/me``` Logged user info
-  * ```DELETE /users/me/token``` Logout user
-  * ```POST /contacts``` Create new contact
+For documentation, see [apiary][apiarydoc-url].
 
 ## Demo
 
