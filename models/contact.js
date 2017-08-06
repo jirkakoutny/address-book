@@ -2,6 +2,8 @@ const _ = require('lodash');
 
 const { firedb } = require('../firebase/firebase');
 
+const ContactsCollectionId = 'Contacts';
+
 const ContactSchema = {
     dob: {},
     cell: {},
@@ -36,7 +38,7 @@ Contact.prototype.save = function () {
     let contact = this.data;
 
     return new Promise((resolve, reject) => {
-        firedb.ref('CONTACTS').push(contact).then(newItem => {
+        firedb.ref(ContactsCollectionId).push(contact).then(newItem => {
             contact.externalId = newItem.key;
             resolve(_.omit(contact, ['creator']));
         }, error => {

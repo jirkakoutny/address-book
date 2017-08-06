@@ -81,6 +81,25 @@ UserSchema.statics.findByToken = function (token) {
     });
 };
 
+UserSchema.statics.findByCredentials = function (email, password) {
+    const User = this;
+
+    return User.findOne({ email }).then((user) => {
+
+        let invalidCredentials = {
+            msg: "Invalid credentials"
+        };
+
+        if (!user)
+            return Promise.reject(invalidCredentials); // no use for given email
+
+        return new Promise((resolve, reject) =>
+            bcrypt.compare(password, user.password, (err, res) =>
+                res ? resolve(user) : reject(invalidCredentials)) // bad password
+        );
+    });
+};
+
 UserSchema.pre('save', function (next) {
     const user = this;
 
@@ -96,6 +115,14 @@ UserSchema.pre('save', function (next) {
     }
 });
 
+UserSchema.post('save', (error, res, next) => {
+    if (error.name === 'MongoError' && error.code === 11000) {
+        next(_.omit(error.toJSON(), ['op']));
+    } else {
+        next(error);
+    }
+});
+
 UserSchema.methods.removeToken = function (token) {
     const user = this;
 
@@ -103,17 +130,6 @@ UserSchema.methods.removeToken = function (token) {
         $pull: {
             tokens: { token }
         }
-    });
-};
-
-UserSchema.statics.findByCredentials = function (email, password) {
-    const User = this;
-
-    return User.findOne({ email }).then((user) => {
-        return new Promise((resolve, reject) =>
-            bcrypt.compare(password, user.password, (err, res) =>
-                res ? resolve(user) : reject())
-        );
     });
 };
 
