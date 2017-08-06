@@ -1,80 +1,144 @@
 FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+HOST: https://afternoon-sands-34791.herokuapp.com
 
 # address-book
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Address-book is a simple API allowing consumers to register new account and manage (create) theid contacts. polls and vote in them.
 
-## Questions Collection [/questions]
+## Users Collection [/users/me]
 
-### List All Questions [GET]
+### Create a New User [POST]
 
-+ Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+You may create your own account using this action. It takes a JSON
+object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of the created user object as well as x-auth header containg authorization token for the created user object.
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "email": "test@example.com",
+            "password": "test01"
         }
 
-+ Response 201 (application/json)
++ Response 200 (application/json)
 
     + Headers
 
-            Location: /questions/2
+            x-auth: "auth-token"
 
     + Body
-
+    
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+                "_id": "id_of_created_user",
+                "email": "test@example.com"
             }
+            
++ Response 400 (application/json)            
+            
+            
+## Users Collection [/users/login]            
+
+### Login User [POST]
+
+You may login specific user this action. It takes a JSON
+object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of specified user as well as x-auth header containg authorization token for specified user.
+
+
++ Request (application/json)
+
+        {
+            "email": "test@example.com",
+            "password": "test01"
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            x-auth: "auth-token"
+
+    + Body
+    
+            {
+                "_id": "id_of_created_user",
+                "email": "test@example.com"
+            }            
+
++ Response 400 (application/json)            
+
+### Get logged user info [GET]
+
+You may get logged in user info. It takes x-auth header containg auth token. It returns a JSON object containg the e-mail and ID of the created user object as well as x-auth header containg authorization token for the created user object.
+
+
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth: "auth-token"
+
++ Response 200 (application/json)
+        
+        {
+                "_id": "5986d9b2a2f16a001174da8f",
+                "email": "test@example.com"
+        }
+        
++ Response 400 (application/json)    
+
++ Response 401 (application/json)     
+
+## Auth tokens [/users/me/token]        
+
+### Logout [DELETE]
+
+You may lougout specific user using this action. It takes x-auth header containg auth token. It returns nothing.
+
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth: "auth-token"
+
++ Response 200 (application/json)
+        
+        {
+                "_id": "5986d9b2a2f16a001174da8f",
+                "email": "test@example.com"
+        }
+        
++ Response 400 (application/json)    
+
++ Response 401 (application/json)     
+        
+## Contacts [/contacts]              
+
+### Create new contact [POST]
+
+You may create your new contact using this action. It takes a JSON
+object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of the created user object as well as x-auth header containg authorization token for the created user object.
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth: "auth-token"
+            
+    
+    + Body            
+            {
+                "email": "test@example.com",
+                "password": "test01"
+            }
+
++ Response 200 (application/json)
+        
+        {
+                "_id": "5986d9b2a2f16a001174da8f",
+                "email": "test@example.com"
+        }
+
++ Response 400 (application/json)  
+
++ Response 401 (application/json)
