@@ -2,6 +2,7 @@
 [rfc-http-url]: https://www.ietf.org/rfc/rfc2616.txt
 [jwt-url]: http://jwt.io
 [mongoDB-url]: https://www.mongodb.com
+[nodejs-url]: https://nodejs.org/en/
 
 # Backend Test Project - Addressbook
 
@@ -9,7 +10,7 @@
 
   * [Firebase][firebase-url] app created.
   * [MongoDB][mongoDB-url] server running.
-  * NodeJS v8 
+  * NodeJS v8.2.1.
 
 ## Run
 
