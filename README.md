@@ -4,6 +4,7 @@
 [mongoDB-url]: https://www.mongodb.com
 [nodejs-url]: https://nodejs.org/en/
 [heroku-url]: https://heroku.com
+[deployed-url]: https://afternoon-sands-34791.herokuapp.com
 
 # Backend Test Project - Addressbook
 
@@ -55,4 +56,5 @@ The same environment variables as before are expected to be set. With [Heroku][h
 
 ## Demo
 
-https://afternoon-sands-34791.herokuapp.com
+Visit [Demo][deployed-url] to see the API in action.
+
