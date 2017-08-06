@@ -3,6 +3,9 @@
 [jwt-url]: http://jwt.io
 [mongoDB-url]: https://www.mongodb.com
 [nodejs-url]: https://nodejs.org/en/
+[heroku-url]: https://heroku.com
+[deployed-url]: https://afternoon-sands-34791.herokuapp.com
+[apiarydoc-url]: http://docs.addressbookjk.apiary.io/#
 
 # Backend Test Project - Addressbook
 
@@ -40,16 +43,15 @@ For restarting the tests during development using ```nodemon``` use:
 
 ## Deploy
 
-The same environment variables as before are expected to be set. 
+The same environment variables as before are expected to be set. With [Heroku][heroku-url] environment configured, just use:
 
-## API 
+```git push heroku```
 
-  * ```POST /users``` Register new user
-  * ```POST /user/login``` Sign in a user
-  * ```GET /users/me``` Logged user info
-  * ```DELETE /users/me/token``` Logout user
-  * ```POST /contacts``` Create new contact
+## Documentation
+
+For documentation, see [address-book on Apiary][apiarydoc-url].
 
 ## Demo
 
-https://afternoon-sands-34791.herokuapp.com
+Visit [Demo][deployed-url] to see the API in action.
+

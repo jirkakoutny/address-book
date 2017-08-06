@@ -1,0 +1,151 @@
+FORMAT: 1A
+HOST: https://afternoon-sands-34791.herokuapp.com
+
+# address-book
+
+Address-book is a simple API allowing consumers to register new account and manage (create) their contacts. 
+
+## User accounts [/users]
+
+### Create a New User [POST]
+
+You may create your own account using this action. It takes a JSON
+object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of the created user as well as x-auth header containg authorization token.
+
++ Request (application/json)
+
+        {
+            "email": "test@example.com",
+            "password": "test01"
+        }
+
++ Response 200 (application/json)
+
+
+    + Headers
+            x-auth: auth-token
+
+    + Body
+    
+            {
+                "_id": "id_of_created_user",
+                "email": "test@example.com"
+            }
+            
+## User login [/users/login]            
+
+### Login User [POST]
+
+You may login specific user using this action. It takes a JSON
+object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of specified user as well as x-auth header containg authorization token for specified user.
+
+
++ Request (application/json)
+
+        {
+            "email": "test@example.com",
+            "password": "test01"
+        }
+
++ Response 200 (application/json)
+
+
+    + Headers
+
+            x-auth: auth-token
+
+    + Body
+    
+            {
+                "_id": "id_of_created_user",
+                "email": "test@example.com"
+            }      
+            
+## User info [/users/me]            
+
+### Get logged user info [GET]
+
+You may get logged user info using this action. It takes x-auth header containg auth token. It returns a JSON object containg the e-mail and ID of corresponding user.
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth: auth-token
+
++ Response 200 (application/json)
+        
+        {
+                "_id": "5986d9b2a2f16a001174da8f",
+                "email": "test@example.com"
+        }
+        
++ Response 401 (application/json)     
+
+## Auth tokens [/users/me/token]        
+
+### Logout [DELETE]
+
+You may lougout specific user using this action. It takes x-auth header containg auth token. It returns nothing.
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth: auth-token
+
++ Response 200 (application/json)
+        
+
++ Response 401 (application/json)     
+        
+## Contacts [/contacts]              
+
+### Create new contact [POST]
+
+You may create your a new contact using this action. It takes a JSON
+object containing an e-mail and a password. It returns a JSON object containing ID of created contact.
+
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth: auth-token
+            
+    + Body            
+    
+            {
+                "cell" : "697-968-088",
+                "dob" : "1968-08-12 20",
+                "email" : "manuel.cortes@example.com",
+                "gender" : "male",
+                "location" : {
+                  "city" : "valladolid",
+                  "postcode" : 33179,
+                  "state" : "comunidad de madrid",
+                  "street" : "2562 avenida de burgos"
+                },
+                "name" : {
+                  "first" : "manuel",
+                  "last" : "cortes",
+                  "title" : "mr"
+                },
+                "nat" : "ES",
+                "phone" : "978-118-814",
+                "picture" : {
+                  "large" : "https://randomuser.me/api/portraits/men/92.jpg",
+                  "medium" : "https://randomuser.me/api/portraits/med/men/92.jpg",
+                  "thumbnail" : "https://randomuser.me/api/portraits/thumb/men/92.jpg"
+                }
+            }
+
+
++ Response 200 (application/json)
+        
+        {
+                "_id": "5986d9b2a2f16a001174da8f",
+                "email": "test@example.com"
+        }
+
++ Response 401 (application/json)
