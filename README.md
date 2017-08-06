@@ -9,6 +9,7 @@
 
   * [Firebase][firebase-url] app created.
   * [MongoDB][mongoDB-url] server running.
+  * NodeJS v8 
 
 ## Run
 
