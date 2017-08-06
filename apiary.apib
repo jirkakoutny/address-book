@@ -3,14 +3,14 @@ HOST: https://afternoon-sands-34791.herokuapp.com
 
 # address-book
 
-Address-book is a simple API allowing consumers to register new account and manage (create) theid contacts. polls and vote in them.
+Address-book is a simple API allowing consumers to register new account and manage (create) their contacts. 
 
-## Users Collection [/users/me]
+## User accounts [/users]
 
 ### Create a New User [POST]
 
 You may create your own account using this action. It takes a JSON
-object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of the created user object as well as x-auth header containg authorization token for the created user object.
+object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of the created user as well as x-auth header containg authorization token.
 
 + Request (application/json)
 
@@ -21,9 +21,9 @@ object containing an e-mail and a password. It returns a JSON object containg th
 
 + Response 200 (application/json)
 
-    + Headers
 
-            x-auth: "auth-token"
+        + Headers
+            x-auth: auth-token
 
     + Body
     
@@ -32,14 +32,11 @@ object containing an e-mail and a password. It returns a JSON object containg th
                 "email": "test@example.com"
             }
             
-+ Response 400 (application/json)            
-            
-            
-## Users Collection [/users/login]            
+## User login [/users/login]            
 
 ### Login User [POST]
 
-You may login specific user this action. It takes a JSON
+You may login specific user using this action. It takes a JSON
 object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of specified user as well as x-auth header containg authorization token for specified user.
 
 
@@ -52,30 +49,29 @@ object containing an e-mail and a password. It returns a JSON object containg th
 
 + Response 200 (application/json)
 
+
     + Headers
 
-            x-auth: "auth-token"
+            x-auth: auth-token
 
     + Body
     
             {
                 "_id": "id_of_created_user",
                 "email": "test@example.com"
-            }            
-
-+ Response 400 (application/json)            
+            }      
+            
+## User info [/users/me]            
 
 ### Get logged user info [GET]
 
-You may get logged in user info. It takes x-auth header containg auth token. It returns a JSON object containg the e-mail and ID of the created user object as well as x-auth header containg authorization token for the created user object.
-
-
+You may get logged user info using this action. It takes x-auth header containg auth token. It returns a JSON object containg the e-mail and ID of corresponding user.
 
 + Request (application/json)
 
     + Headers
 
-            x-auth: "auth-token"
+            x-auth: auth-token
 
 + Response 200 (application/json)
         
@@ -84,8 +80,6 @@ You may get logged in user info. It takes x-auth header containg auth token. It 
                 "email": "test@example.com"
         }
         
-+ Response 400 (application/json)    
-
 + Response 401 (application/json)     
 
 ## Auth tokens [/users/me/token]        
@@ -94,7 +88,6 @@ You may get logged in user info. It takes x-auth header containg auth token. It 
 
 You may lougout specific user using this action. It takes x-auth header containg auth token. It returns nothing.
 
-
 + Request (application/json)
 
     + Headers
@@ -103,12 +96,6 @@ You may lougout specific user using this action. It takes x-auth header containg
 
 + Response 200 (application/json)
         
-        {
-                "_id": "5986d9b2a2f16a001174da8f",
-                "email": "test@example.com"
-        }
-        
-+ Response 400 (application/json)    
 
 + Response 401 (application/json)     
         
@@ -116,21 +103,43 @@ You may lougout specific user using this action. It takes x-auth header containg
 
 ### Create new contact [POST]
 
-You may create your new contact using this action. It takes a JSON
-object containing an e-mail and a password. It returns a JSON object containg the e-mail and ID of the created user object as well as x-auth header containg authorization token for the created user object.
+You may create your a new contact using this action. It takes a JSON
+object containing an e-mail and a password. It returns a JSON object containing ID of created contact.
+
 
 + Request (application/json)
 
     + Headers
 
-            x-auth: "auth-token"
+            x-auth: auth-token
             
-    
     + Body            
+    
             {
-                "email": "test@example.com",
-                "password": "test01"
+                "cell" : "697-968-088",
+                "dob" : "1968-08-12 20",
+                "email" : "manuel.cortes@example.com",
+                "gender" : "male",
+                "location" : {
+                  "city" : "valladolid",
+                  "postcode" : 33179,
+                  "state" : "comunidad de madrid",
+                  "street" : "2562 avenida de burgos"
+                },
+                "name" : {
+                  "first" : "manuel",
+                  "last" : "cortes",
+                  "title" : "mr"
+                },
+                "nat" : "ES",
+                "phone" : "978-118-814",
+                "picture" : {
+                  "large" : "https://randomuser.me/api/portraits/men/92.jpg",
+                  "medium" : "https://randomuser.me/api/portraits/med/men/92.jpg",
+                  "thumbnail" : "https://randomuser.me/api/portraits/thumb/men/92.jpg"
+                }
             }
+
 
 + Response 200 (application/json)
         
@@ -138,7 +147,5 @@ object containing an e-mail and a password. It returns a JSON object containg th
                 "_id": "5986d9b2a2f16a001174da8f",
                 "email": "test@example.com"
         }
-
-+ Response 400 (application/json)  
 
 + Response 401 (application/json)
