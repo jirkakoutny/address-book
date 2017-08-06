@@ -14,15 +14,21 @@ const { Constants } = require('./constants');
 const { mongoose } = require('./db/mongoose');
 
 const { logger } = require('./logger/logger');
+const { limiter } = require('./rate-limiter/rate-limiter');
+const { ssl } = require('./ssl-redirect/ssl-redirect');
 
 const { Contact } = require('./models/contact');
 const { User } = require('./models/user');
 
 const app = express();
 
+app.enable('trust proxy'); // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc) 
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(limiter); 
 app.use(logger);
+app.use(ssl);
 
 app.post('/users', async (req, res) => {
     try {

@@ -5,7 +5,8 @@
         "PORT": 3000,   // Port where to run Express on development environment
         "MONGODB_URI": "mongodb://localhost:27017/AddressBook", // MongoDB URI for development environment
         "JWT_SECRET": "secret", // A string, buffer, or object containing either the secret for HMAC algorithms
-        "JWT_VALIDITY": "1h" // Token Expiration (exp claim),
+        "JWT_VALIDITY": "1h", // Token Expiration (exp claim),
+        "FIREBASE_DB_URL": "",
         "FIREBASE_PRIVATE_KEY": "-----BEGIN PRIVATE KEY----------END PRIVATE KEY-----\n",
         "FIREBASE_CLIENT_EMAIL": "YOUR@FIREBASE.EMAIL"
     },
@@ -13,7 +14,8 @@
         "PORT": 3000,   // Port where to run Express on development environment
         "MONGODB_URI": "mongodb://localhost:27017/AddressBookTest", // MongoDB URI for development environment
         "JWT_SECRET": "secret", //  A string, buffer, or object containing either the secret for HMAC algorithms
-        "JWT_VALIDITY": "1h" // Token Expiration (exp claim),
+        "JWT_VALIDITY": "1h", // Token Expiration (exp claim),
+        "FIREBASE_DB_URL": "",
         "FIREBASE_PRIVATE_KEY": "-----BEGIN PRIVATE KEY----------END PRIVATE KEY-----\n",
         "FIREBASE_CLIENT_EMAIL": "YOUR@FIREBASE.EMAIL"
     }
