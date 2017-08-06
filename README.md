@@ -3,6 +3,7 @@
 [jwt-url]: http://jwt.io
 [mongoDB-url]: https://www.mongodb.com
 [nodejs-url]: https://nodejs.org/en/
+[heroku-url]: https://heroku.com
 
 # Backend Test Project - Addressbook
 
@@ -40,7 +41,9 @@ For restarting the tests during development using ```nodemon``` use:
 
 ## Deploy
 
-The same environment variables as before are expected to be set. 
+The same environment variables as before are expected to be set. With [Heroku][heroku-url] environment configured, just use:
+
+```git push heroku```
 
 ## API 
 
