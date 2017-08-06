@@ -38,15 +38,6 @@ app.post('/users', async (req, res) => {
         const token = await user.generateAuthToken();
         res.header(Constants.authHeader, token).send(user);
     } catch (e) {
-        res.status(400).send(e);
-    }
-});
-
-app.get('/users/me', authenticate, async (req, res) => {
-    try {
-        const user = await User.findByToken(req.token);
-        res.send(user);
-    } catch (e) {
         res.status(400).send();
     }
 });
@@ -57,6 +48,15 @@ app.post('/users/login', async (req, res) => {
         const user = await User.findByCredentials(body.email, body.password);
         const token = await user.generateAuthToken();
         res.header(Constants.authHeader, token).send(user);
+    } catch (e) {
+        res.status(400).send();
+    }
+});
+
+app.get('/users/me', authenticate, async (req, res) => {
+    try {
+        const user = await User.findByToken(req.token);
+        res.send(user);
     } catch (e) {
         res.status(400).send();
     }
@@ -77,7 +77,7 @@ app.post('/contacts', authenticate, async (req, res) => {
         const contact = await new Contact(req.body, req.userid).save();
         res.send(contact);
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).send();
     }
 });
 
