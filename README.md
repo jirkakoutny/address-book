@@ -49,7 +49,7 @@ The same environment variables as before are expected to be set. With [Heroku][h
 
 ## Documentation
 
-For documentation, see [apiary][apiarydoc-url].
+For documentation, see [address-book on Apiary][apiarydoc-url].
 
 ## Demo
 
