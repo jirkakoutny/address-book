@@ -206,4 +206,24 @@ describe('POST /contacts', () => {
       })
       .end(done);
   });
+
+  it('should create a contact and sanitize input', (done) => {
+    const contact = {
+      "email": "dummy.contact@example.com",
+      "not_to_be_stored": "some_value"
+    };
+
+    request(app)
+      .post('/contacts')
+      .send(contact)
+      .set(Constants.authHeader, users[0].tokens[0].token)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.externalId).toExist();
+        expect(res.body.creator).toNotExist();
+        expect(res.body.not_to_be_stored).toNotExist();
+        expect(res.body.email).toBe(contact.email);
+      })
+      .end(done);
+  });
 });
