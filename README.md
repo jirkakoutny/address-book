@@ -17,23 +17,23 @@
 
 ## Run
 
-Clone the repon, rename ```config.json.example``` to ```config.json```, fill in specific settings and run:
+Clone the repo, rename ```config.json.example``` to ```config.json```, fill in specific settings and run:
 
 ```npm install && npm start```
 
 ### Settings that are needed
 
-  * ```PORT``` Port where to run Express on development environment
-  * ```MONGODB_URI``` MongoDB URI for development environment
+  * ```PORT``` Port where to run Express
+  * ```MONGODB_URI``` MongoDB URI
   * ```JWT_SECRET``` Secret for JWT
   * ```JWT_VALIDITY``` Token Expiration (exp claim) for JWT
-  * ```FIREBASE_DB_URL``` Firebase DB URL for an environment
-  * ```FIREBASE_PRIVATE_KEY``` Firebase private key for test environment
-  * ```FIREBASE_CLIENT_EMAIL``` Firebase client email for test environment
+  * ```FIREBASE_DB_URL``` Firebase DB URL
+  * ```FIREBASE_PRIVATE_KEY``` Firebase private key
+  * ```FIREBASE_CLIENT_EMAIL``` Firebase client email
 
 ## Test
 
-Clone the repon, rename ```config.json.example``` to ```config.json```, fill in specific settings and run:
+Clone the repo, rename ```config.json.example``` to ```config.json```, fill in specific settings and run:
 
 ```npm install && npm test```
 
@@ -53,5 +53,5 @@ For documentation, see [address-book on Apiary][apiarydoc-url].
 
 ## Demo
 
-Visit [Demo][deployed-url] to see the API in action.
+Visit [demo][deployed-url] to see the API in action.
 
