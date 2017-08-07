@@ -87,12 +87,12 @@ UserSchema.statics.findByCredentials = function (email, password) {
 
     return User.findOne({ email }).then((user) => {
 
-        let invalidCredentials = {
+        const invalidCredentials = {
             msg: "Invalid credentials"
         };
 
         if (!user)
-            return Promise.reject(invalidCredentials); // no use for given email
+            return Promise.reject(invalidCredentials); // no user for given email
 
         return new Promise((resolve, reject) =>
             bcrypt.compare(password, user.password, (err, res) =>
