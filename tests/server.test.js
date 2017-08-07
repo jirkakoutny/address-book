@@ -48,7 +48,6 @@ describe('User accounts', () => {
 
     it('should not create user if email in use', (done) => {
       const password = 'test';
-
       request(app)
         .post('/users')
         .send({

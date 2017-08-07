@@ -116,13 +116,13 @@ UserSchema.pre('save', function (next) {
     }
 });
 
-UserSchema.post('save', (error, res, next) => {
-    if (error.name === 'MongoError' && error.code === 11000) {
-        next(_.omit(error.toJSON(), ['op']));   // omit ID of duplicit record
-    } else {
-        next(error);
-    }
-});
+// UserSchema.post('save', (error, res, next) => {
+//     if (error.name === 'MongoError' && error.code === 11000) {
+//         next(_.omit(error.toJSON(), ['op']));   // omit ID of duplicit record
+//     } else {
+//         next(error);
+//     }
+// });
 
 const User = mongoose.model('User', UserSchema);
 
